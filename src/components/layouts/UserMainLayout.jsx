@@ -7,11 +7,9 @@ import { Outlet } from 'react-router-dom'
 const UserMainLayout = () => {
   return (
     <Container className='MainLayout'>
-      <Header />
-      <main>
+   
         <Outlet />
-      </main>
-      <Footer />
+ 
     </Container>
   )
 }
@@ -25,16 +23,12 @@ const Container = styled.div`
   display:flex;
   flex-direction:column;
   justify-content:space-between;
-  .Header{
+ 
 
-  }
-
-  .main-content{
+  /* .main-content{
     flex:1;
-  }
+  } */
 
-  .Footer{
-
-  }
+  
 }
 `

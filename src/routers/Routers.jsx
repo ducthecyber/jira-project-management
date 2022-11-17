@@ -4,6 +4,7 @@ import UserMainLayout from '../components/layouts/UserMainLayout'
 import ProjectMainLayout from '../components/layouts/ProjectMainLayout'
 import UserManagement from '../pages/User/UserManagement'
 import Home from '../pages/Home/Home'
+import Login from '../pages/Login/Login'
 
 const Routers = () => {
   //useRoutes nhận vào 1 mảng
@@ -31,10 +32,10 @@ const Routers = () => {
           path: 'user',
           element:<UserManagement/>,
         },
-        // {
-        //   path: 'signup',
-        //   element:<SignUp/>,
-        // },
+        {
+          path: 'login',
+          element:<Login/>,
+        },
         // {
         //   path: 'film',
         //   element:<FilmManage/>,
