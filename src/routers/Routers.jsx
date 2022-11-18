@@ -10,7 +10,7 @@ const Routers = () => {
   //useRoutes nhận vào 1 mảng
   const routing = useRoutes([
     {
-      path: '',
+      path: 'project',
       element: <ProjectMainLayout />,
       children: [
         {
@@ -25,8 +25,7 @@ const Routers = () => {
       children: [
         {
           path: '',
-
-          element:<Navigate to='user'/>,
+          element:<Navigate to='login'/>,
         },
         {
           path: 'user',
