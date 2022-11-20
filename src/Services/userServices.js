@@ -1,26 +1,17 @@
-import axios from "axios";
-import { Services } from "./configURL";
+import {request} from "../configs/axios"
+import { BASE_URL } from "../constants/common"
+export const fetchUserLogin = (data)=>{
+  return request({
+    url:`${BASE_URL}/Users/signin`,
+    method:"POST",
+    data:data,
+  })
+}
 
-export const getUserServ = {
-  postUserLogin: (dataLogin) => {
-    // return axios({
-    //   url: `${BASE_URL}/api/QuanLyNguoiDung/DangNhap`,
-    //   method: "POST",
-    //   data: dataLogin,
-    //   headers: { TokenCybersoft: CYBERSOFT_TOKEN },
-    // });
-    return Services.post("/api/QuanLyNguoiDung/DangNhap", dataLogin);
-  },
-  postUserRegister: (dataRegister) => {
-    return Services.post("/api/QuanLyNguoiDung/DangKy", dataRegister);
-  },
-  getUserInfor: () => {
-    return Services.post("/api/QuanLyNguoiDung/ThongTinTaiKhoan");
-  },
-  postUserInfor: (userInfor) => {
-    return Services.put(
-      "/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung",
-      userInfor
-    );
-  },
-};
+export const fetchUserRegister = (data)=>{
+  return request ({
+    url:`${BASE_URL}/Users/signup`,
+    method:'POST',
+    data:data
+  })
+}
