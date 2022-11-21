@@ -73,7 +73,7 @@ const Menu= () => {
             <NavLink
               className="nav-link text-dark"
               style={{ textDecoration: "none" }}
-              to="/user-management"
+              to="userManagement"
             >
               User management
             </NavLink>

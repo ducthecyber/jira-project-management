@@ -15,3 +15,11 @@ export const fetchUserRegister = (data)=>{
     data:data
   })
 }
+
+export const getUserListApi = (data)=>{
+  return request({
+    url:`${BASE_URL}/Users/getUser`,
+    method:'GET',
+    data:data,
+  })
+}

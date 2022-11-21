@@ -18,6 +18,7 @@ const NoAuthGuard = lazy(() => import("../pages/guards/NoAuthGuard"))
 // import NoAuthGuard from '../pages/guards/NoAuthGuard'
 const AuthGuard = lazy(() => import("../pages/guards/AuthGuard"))
 // import AuthGuard from '../pages/guards/AuthGuard'
+const UserManagment = lazy(()=>import("../../src/pages/User/UserManagement"))
 const Routers = () => {
   //useRoutes nhận vào 1 mảng
   const routing = useRoutes([
@@ -29,12 +30,10 @@ const Routers = () => {
           path: '',
           element: <Home />,
           children: [
-
-            // {
-            //   path: '',
-            //   element: <ProjectManagement />,
-            // }, 
-
+            {
+              path:'userManagement',
+              element:<UserManagment/>,
+            }
           ]
         }
       ]

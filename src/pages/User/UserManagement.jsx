@@ -1,8 +1,13 @@
 import React from 'react'
+import { lazy } from 'react'
+
+import TableUserManagement from "../../modules/table-user-management/TableUserManagement"
 
 const UserManagement = () => {
   return (
-    <div>UserManagement</div>
+    <div>
+      <TableUserManagement/>
+    </div>
   )
 }
 

@@ -39,7 +39,7 @@ const FormLogin = () => {
       localStorage.setItem(USER_LOGIN_KEY, JSON.stringify(result.data.content));
       dispatch(setUserAction(result.data.content));
       message.success('Đăng nhập thành công');
-      navigate('/projectManage');
+      navigate('/');
     }
     catch (err) {
       console.log('error', err)

@@ -2,12 +2,13 @@
 import { createContext, useContext, useState } from "react";
 import styled from "styled-components";
 import spinner from "./Spinner-1s-200px.gif"
+
 const LoadingContext = createContext({
     loading: false,
     setLoading: null,
 });
 
-export function LoadingProvider({ children }) {
+const LoadingProvider= ({ children })=> {
     const [loading, setLoading] = useState(false);
     const value = { loading, setLoading };
 
@@ -22,6 +23,8 @@ export function LoadingProvider({ children }) {
         </LoadingContext.Provider>
     );
 }
+
+export {LoadingProvider,LoadingContext}
 
 const LoaderContainer = styled.div`
   position: absolute;
