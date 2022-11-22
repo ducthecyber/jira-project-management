@@ -4,7 +4,7 @@ import {
     DeleteOutlined,
 } from "@ant-design/icons";
 import { Button, Input, notification, Space, Table } from "antd";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState,Fragment } from "react";
 import Highlighter from "react-highlight-words";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import {
@@ -17,6 +17,8 @@ import {
 } from "../../store/actions/userAction";
 import { LoadingContext } from "../../contexts/LoadingContext";
 import "./table-user-management.scss";
+import FormEditUser from "../form-edit-user/FormEditUser";
+import EditUser from "../form-edit-user/EditUser";
 //   import { openFormEditUserAction } from "../../store/actions/modalEditAction";
 
 const TableUserManagement = () => {
@@ -24,10 +26,10 @@ const TableUserManagement = () => {
     const dispatch = useDispatch();
 
     const { arrUser } = useSelector((state) => state.userReducer);
-    console.log('arrUser',arrUser)
-    // const { loadingState, setLoadingState } = useContext(
-    //     LoadingContext
-    // );
+    const [editUserInfo, setEditUserInfo] = useState({});
+    const [isOpenModalModify, setOpenModalModify] = useState(false);
+    
+    // console.log('arrUser', arrUser)
     const [loadingState, setLoadingState] = useState({
         loading: false,
         setLoading: null,
@@ -36,6 +38,9 @@ const TableUserManagement = () => {
     useEffect(() => {
         fetchGetUserList();
     }, []);
+    useEffect(()=>{
+        console.log(isOpenModalModify)
+    },[isOpenModalModify])
 
     const fetchGetUserList = async () => {
         setLoadingState({ loading: true });
@@ -186,6 +191,20 @@ const TableUserManagement = () => {
             responsive: ["xs"],
         },
         {
+            title: "Avatar",
+            dataIndex: "avatar",
+            key: "avatar",
+            // width: 100,
+            align: 'center',
+            ellipsis: true,
+            render: (text, userInfo) => {
+                return <Fragment>
+                    <img src={userInfo.avatar} alt={userInfo.name} width={25} height={25}
+                        onError={(e) => { e.target.onError = null; e.target.src = `https://picsum.photo/id/${userInfo.name}/50/50` }} />
+                </Fragment>
+            }
+        },
+        {
             title: "ID",
             dataIndex: "userId",
             key: "userId",
@@ -248,13 +267,15 @@ const TableUserManagement = () => {
             title: "Action",
             dataIndex: "action",
             key: "action",
-            render: (_, record) => (
+            render: (_, item) => (
                 <Space size="middle">
                     <a
                         title="Edit"
                         className="text-success"
                         style={{ fontSize: 20 }}
                         onClick={() => {
+                            setOpenModalModify(true)
+                            setEditUserInfo(item)
                             // dispatch(openFormEditUserAction());
                             // fetchUserEdit(record.userId);
                         }}
@@ -285,6 +306,13 @@ const TableUserManagement = () => {
                 columns={columns}
                 dataSource={arrUser}
             />
+           {isOpenModalModify && (
+            <EditUser isOpenModalModify={isOpenModalModify}
+            setOpenModalModify={setOpenModalModify}
+            setEditUserInfo={setEditUserInfo}
+            editUserInfo={editUserInfo}
+            />
+           )}
         </div>
     );
 }

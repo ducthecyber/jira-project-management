@@ -23,3 +23,11 @@ export const getUserListApi = (data)=>{
     data:data,
   })
 }
+
+export const fetchUpdateUserApi =(userUpdate)=>{
+  return request({
+    url:`${BASE_URL}/Users/editUser`,
+    method:'PUT',
+    data:userUpdate,
+  })
+}
