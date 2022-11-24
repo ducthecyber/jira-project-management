@@ -3,11 +3,12 @@ import {
     EditOutlined,
     DeleteOutlined,
 } from "@ant-design/icons";
-import { Button, Input, notification, Space, Table } from "antd";
-import React, { useContext, useEffect, useRef, useState,Fragment } from "react";
+import { Button, Input, message, notification, Space, Table, Popconfirm } from "antd";
+import React, { useContext, useEffect, useRef, useState, Fragment } from "react";
 import Highlighter from "react-highlight-words";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import {
+    fetchDeleteUserApi,
     // fetchDeleteUserApi, 
     getUserListApi
 } from "../../Services/userServices";
@@ -28,7 +29,7 @@ const TableUserManagement = () => {
     const { arrUser } = useSelector((state) => state.userReducer);
     const [editUserInfo, setEditUserInfo] = useState({});
     const [isOpenModalModify, setOpenModalModify] = useState(false);
-    
+
     // console.log('arrUser', arrUser)
     const [loadingState, setLoadingState] = useState({
         loading: false,
@@ -38,9 +39,9 @@ const TableUserManagement = () => {
     useEffect(() => {
         fetchGetUserList();
     }, []);
-    useEffect(()=>{
+    useEffect(() => {
         console.log(isOpenModalModify)
-    },[isOpenModalModify])
+    }, [isOpenModalModify])
 
     const fetchGetUserList = async () => {
         setLoadingState({ loading: true });
@@ -158,19 +159,26 @@ const TableUserManagement = () => {
             ),
     });
 
-    // const fetchDeleteProject = async (userId) => {
-    //   try {
-    //     await fetchDeleteUserApi(userId);
-    //     notification.success({
-    //       description: "Successfully !",
-    //     });
-    //     fetchGetUserList();
-    //   } catch (err) {
-    //     notification.error({
-    //       message: err.response.data.content,
-    //     });
-    //   }
-    // };
+    //confirm delete antd
+    const confirm = (item) => {
+        fetchDeleteUser(item)
+    };
+    //confirm cancel antd
+    const cancel = () => {
+        // message.error('Click on No');
+    };
+
+    const fetchDeleteUser = async (userId) => {
+
+        console.log(userId)
+        try {
+            await fetchDeleteUserApi(userId.userId);
+            message.success('Sucessful Delete')
+            fetchGetUserList();
+        } catch (err) {
+            message.error(err.response.data.content)
+        }
+    };
 
     // const fetchUserEdit = (userId) => {
     //   const arrUserEdit = [...arrUser];
@@ -282,17 +290,26 @@ const TableUserManagement = () => {
                     >
                         <EditOutlined />
                     </a>
-                    <a
-                        title="Delete"
-                        className="text-danger"
-                        style={{ fontSize: 20 }}
-                        onClick={() => {
-                            //   fetchDeleteProject(record.userId)
-                        }
-                        }
+                    <Popconfirm
+                        title="Are you sure to delete this task?"
+                        onConfirm={() => confirm(item)}
+                        onCancel={cancel}
+                        okText="Yes"
+                        cancelText="No"
                     >
-                        <DeleteOutlined />
-                    </a>
+                        <a
+                            href="#"
+                            title="Delete"
+                            className="text-danger"
+                            style={{ fontSize: 20 }}
+                            onClick={() => {
+                                // fetchDeleteUser(item)
+                            }
+                            }
+                        >
+                            <DeleteOutlined />
+                        </a>
+                    </Popconfirm>
                 </Space>
             ),
         },
@@ -306,13 +323,13 @@ const TableUserManagement = () => {
                 columns={columns}
                 dataSource={arrUser}
             />
-           {isOpenModalModify && (
-            <EditUser isOpenModalModify={isOpenModalModify}
-            setOpenModalModify={setOpenModalModify}
-            setEditUserInfo={setEditUserInfo}
-            editUserInfo={editUserInfo}
-            />
-           )}
+            {isOpenModalModify && (
+                <EditUser isOpenModalModify={isOpenModalModify}
+                    setOpenModalModify={setOpenModalModify}
+                    setEditUserInfo={setEditUserInfo}
+                    editUserInfo={editUserInfo}
+                />
+            )}
         </div>
     );
 }

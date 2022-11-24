@@ -31,3 +31,10 @@ export const fetchUpdateUserApi =(userUpdate)=>{
     data:userUpdate,
   })
 }
+
+export const fetchDeleteUserApi = (userId)=>{
+  return request({
+    url:`${BASE_URL}/Users/deleteUser?id=${userId}`,
+    method:'DELETE',
+  })
+}
