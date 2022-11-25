@@ -2,6 +2,7 @@ import {
     SearchOutlined,
     EditOutlined,
     DeleteOutlined,
+    DownloadOutlined
 } from "@ant-design/icons";
 import { Button, Input, message, notification, Space, Table, Popconfirm } from "antd";
 import React, { useContext, useEffect, useRef, useState, Fragment } from "react";
@@ -20,6 +21,7 @@ import { LoadingContext } from "../../contexts/LoadingContext";
 import "./table-user-management.scss";
 import FormEditUser from "../form-edit-user/FormEditUser";
 import EditUser from "../form-edit-user/EditUser";
+
 //   import { openFormEditUserAction } from "../../store/actions/modalEditAction";
 
 const TableUserManagement = () => {
@@ -29,6 +31,7 @@ const TableUserManagement = () => {
     const { arrUser } = useSelector((state) => state.userReducer);
     const [editUserInfo, setEditUserInfo] = useState({});
     const [isOpenModalModify, setOpenModalModify] = useState(false);
+    const [size, setSize] = useState('small'); // default is 'middle'
 
     // console.log('arrUser', arrUser)
     const [loadingState, setLoadingState] = useState({
@@ -61,10 +64,20 @@ const TableUserManagement = () => {
         setSearchText(selectedKeys[0]);
         setSearchedColumn(dataIndex);
     };
-
     const handleReset = (clearFilters) => {
         clearFilters();
-        setSearchText("");
+        setSearchText('');
+    };
+
+
+
+    const handleChange = (pagination, filters, sorter) => {
+        console.log('Various parameters', pagination, filters, sorter);
+
+        // this.setState({
+        //   filteredInfo: filters,
+        //   sortedInfo: sorter,
+        // });
     };
 
     const getColumnSearchProps = (dataIndex) => ({
@@ -73,11 +86,13 @@ const TableUserManagement = () => {
             selectedKeys,
             confirm,
             clearFilters,
+            close,
         }) => (
             <div
                 style={{
                     padding: 8,
                 }}
+                onKeyDown={(e) => e.stopPropagation()}
             >
                 <Input
                     ref={searchInput}
@@ -95,7 +110,9 @@ const TableUserManagement = () => {
                 <Space>
                     <Button
                         type="primary"
-                        onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                        onClick={() =>
+                            handleSearch(selectedKeys, confirm, dataIndex)
+                        }
                         icon={<SearchOutlined />}
                         size="small"
                         style={{
@@ -105,7 +122,10 @@ const TableUserManagement = () => {
                         Search
                     </Button>
                     <Button
-                        onClick={() => clearFilters && handleReset(clearFilters)}
+                        onClick={() => {
+                            clearFilters &&
+                                handleReset(clearFilters)
+                        }}
                         size="small"
                         style={{
                             width: 90,
@@ -186,6 +206,8 @@ const TableUserManagement = () => {
     //   dispatch(setUserEditAction(arrUserEdit[index]));
     // };
 
+    //filter and sort function
+
     const columns = [
         {
             title: "ID & Name",
@@ -216,6 +238,7 @@ const TableUserManagement = () => {
             title: "ID",
             dataIndex: "userId",
             key: "userId",
+            align: 'center',
             sortDirections: ["descend"],
             sorter: (item2, item1) => item2.userId - item1.userId,
             responsive: ["sm"],
@@ -239,6 +262,7 @@ const TableUserManagement = () => {
         },
         {
             title: "Email & Phone",
+            align: 'center',
             render: (record) => (
                 <React.Fragment>
                     {record.email}
@@ -291,7 +315,7 @@ const TableUserManagement = () => {
                         <EditOutlined />
                     </a>
                     <Popconfirm
-                        title="Are you sure to delete this task?"
+                        title="Are you sure to delete this user?"
                         onConfirm={() => confirm(item)}
                         onCancel={cancel}
                         okText="Yes"
@@ -315,13 +339,16 @@ const TableUserManagement = () => {
         },
     ];
     return (
-        <div className="text-center">
-            <h3 className="mb-3 font-weight-bold">User management</h3>
+        <div className="text-center TableUserManagement">
+           
+            <h3 className="font-weight-bold mb-4">User Management</h3>
+
             <Table
                 className="table"
                 rowKey={"userId"}
                 columns={columns}
                 dataSource={arrUser}
+                onChange={handleChange}
             />
             {isOpenModalModify && (
                 <EditUser isOpenModalModify={isOpenModalModify}
