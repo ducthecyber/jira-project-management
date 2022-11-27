@@ -25,11 +25,11 @@ const EditUser = ({
     setOpenModalModify(false)
   };
 
-  const handleSubmit =async(values)=>{
-    const userUpdate = {...values, id: editUserInfo.userId.toString()}
+  const handleSubmit = async (values) => {
+    const userUpdate = { ...values, id: editUserInfo.userId.toString() }
     try {
-      await 
-      fetchUpdateUserApi(userUpdate);
+      await
+        fetchUpdateUserApi(userUpdate);
       message.success('Sucessful Update !')
       const result = await getUserListApi();
       dispatch(getUserListAction(result.data.content));
@@ -39,11 +39,14 @@ const EditUser = ({
     }
   }
 
+  //validation
+
+
   console.log(editUserInfo)
   return (
     <>
       <Drawer
-        title="Create a new account"
+        title="Edit User Information"
         width={window.innerWidth / 2}
         onClose={onClose}
         open={isOpenModalModify}
@@ -61,7 +64,7 @@ const EditUser = ({
           layout="vertical" hideRequiredMark
           width={window.innerWidth / 2}
           form={form}
-          onFinish={(values)=>handleSubmit(values)}
+          onFinish={(values) => handleSubmit(values)}
           initialValues={{
             email: editUserInfo.email,
             passWord: editUserInfo.passWord,
@@ -159,6 +162,13 @@ const EditUser = ({
               {
                 required: true,
                 message: "Please input your phone number!",
+              },
+              {
+                pattern: /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/,
+                message: 'Phone Number is invalid !'
+              },
+              {
+                min: 10, max: 12, message: 'Phone Number must be between 10 and 12 numbers.'
               },
             ]}
           >

@@ -13,3 +13,16 @@
     margin-bottom: 0;
   }
   
+  .TableUserManagement {
+    .ant-table-thead>tr>th {
+        text-align: center;
+        color: lightseagreen;
+        font-weight: 600;
+    }
+
+    .ant-table-tbody>tr>td {
+        word-wrap: break-word;
+        max-width: 10px;
+        text-align: center;
+    }
+}
