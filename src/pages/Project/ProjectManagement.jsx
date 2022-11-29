@@ -1,9 +1,10 @@
 import React from 'react'
+import TableManagement from '../../modules/table-management/table-management'
 
-const ProjectManagement = () => {
+export default function ProjectManagement() {
   return (
-    <div>ProjectManagement</div>
+    <div >
+        <TableManagement />
+    </div>
   )
 }
-
-export default ProjectManagement
