@@ -53,13 +53,6 @@ export default function TableManagement() {
     fetchGetAllProject();
   }, []);
 
-  // const fetchGetAllProject = async () => {
-  //   setLoadingState({ isLoading: true });
-  //   const result = await fetchGetAllProjectApi();
-  //   setLoadingState({ isLoading: false });
-  //   dispatch(getTableAction(result.data.content));
-  // };
-
   const fetchGetAllProject = async () => {
     setLoadingState({ loading: true });
     const result = await fetchGetAllProjectApi();
