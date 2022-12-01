@@ -27,8 +27,7 @@ export const fetchDeleteProjectApi = (id) => {
 export const fetchGetProjectDetailApi = (id) => {
     return request({
         url: `${BASE_URL}/Project/getProjectDetail?id=${id}`,
-        method: "GET",
-        
+        method: "GET"
     })
 }
 

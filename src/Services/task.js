@@ -1,15 +1,16 @@
 import { request } from "../configs/axios"
+import { BASE_URL } from "../constants/common"
 
 export const fetchCreateTaskApi = (data) => {
     return request({
-        url: `/Project/createTask`,
+        url: `${BASE_URL}/Project/createTask`,
         method: "POST",
         data: data,
     })
 }
 export const fetchTaskDetailApi = (taskId) => {
     return request({
-        url: `/Project/getTaskDetail?taskId=${taskId}`,
+        url: `${BASE_URL}/Project/getTaskDetail?taskId=${taskId}`,
         method: "GET",
         data: taskId,
     })
@@ -17,35 +18,35 @@ export const fetchTaskDetailApi = (taskId) => {
 
 export const fetchUpdateStatusApi = (status) => {
     return request({
-        url: `/Project/updateStatus`,
+        url: `${BASE_URL}/Project/updateStatus`,
         method: "PUT",
         data: status,
     })
 }
 export const fetchUpdatePriorityApi = (priority) => {
     return request({
-        url: `/Project/updatePriority`,
+        url: `${BASE_URL}/Project/updatePriority`,
         method: "PUT",
         data: priority,
     })
 }
 export const fetchUpdateDesciptionApi = (desciption) => {
     return request({
-        url: `/Project/updateDescription`,
+        url: `${BASE_URL}/Project/updateDescription`,
         method: "PUT",
         data: desciption,
     })
 }
 export const fetchUpdateTimeTrackingApi = (timeTracking) => {
     return request({
-        url: `/Project/updateTimeTracking`,
+        url: `${BASE_URL}/Project/updateTimeTracking`,
         method: "PUT",
         data: timeTracking,
     })
 }
 export const fetchUpdateEstimateApi = (estimate) => {
     return request({
-        url: `/Project/updateEstimate`,
+        url: `${BASE_URL}/Project/updateEstimate`,
         method: "PUT",
         data: estimate,
     })
@@ -53,7 +54,7 @@ export const fetchUpdateEstimateApi = (estimate) => {
 
 export const fetchUpdateTaskDetailApi = (data) => {
     return request({
-        url: `/Project/updateTask`,
+        url: `${BASE_URL}/Project/updateTask`,
         method: "POST",
         data: data,
     })
@@ -61,7 +62,7 @@ export const fetchUpdateTaskDetailApi = (data) => {
 
 export const fetchRemoveTaskApi = (taskId) => {
     return request({
-        url: `/Project/removeTask?taskId=${taskId}`,
+        url: `${BASE_URL}/Project/removeTask?taskId=${taskId}`,
         method: "DELETE",
     })
 }

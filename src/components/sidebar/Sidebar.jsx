@@ -22,7 +22,7 @@ export default function Sidebar() {
     },
     {
       label: (
-        <a onClick={() => dispatch(openFormCreateTaskAction())}>Create task</a>
+        <a onClick={() => dispatch(openFormCreateTaskAction(true))}>Create task</a>
       ),
       key: "2",
       icon: <PlusOutlined style={{ fontSize: 20 }} />,
