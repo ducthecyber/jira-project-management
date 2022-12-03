@@ -9,11 +9,23 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux/es/exports";
 import { openFormCreateTaskAction } from "../../store/actions/modalEditAction";
 
+import FormCreateTask from "../../modules/form-create-task/form-create-task";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+
 const { Sider } = Layout;
 
 export default function Sidebar() {
   const dispatch = useDispatch();
   const [collapsed, setCollapsed] = useState(true);
+  const { visible } = useSelector((state) => state.modalEditProjectReducer);
+  
+  useEffect(()=>{
+    // console.log('modal edit',visible)
+  },[])
+
+  console.log('modaledit',visible)
+
   const items = [
     {
       label: <Link to="/">Trang chủ</Link>,
@@ -22,7 +34,7 @@ export default function Sidebar() {
     },
     {
       label: (
-        <a onClick={() => dispatch(openFormCreateTaskAction(true))}>Create task</a>
+        <a onClick={() => dispatch(openFormCreateTaskAction())}>Create task</a>
       ),
       key: "2",
       icon: <PlusOutlined style={{ fontSize: 20 }} />,

@@ -23,6 +23,7 @@ export const openFormCreateTaskAction = () => {
         type: OPEN_FORM_CREATE_TASK,
         title: "Create task",
         Component: <FormCreateTask />,
+        // a: console.log('a')
     })
 }
 

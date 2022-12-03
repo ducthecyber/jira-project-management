@@ -34,23 +34,39 @@ import { getUserAction } from "../../store/actions/userAction";
 import { LoadingContext } from "../../contexts_copy/loading.context";
 import { NavLink } from "react-router-dom";
 
+import FormEditProject from "../form-edit-project/form-edit-project";
+
+import FormCreateTask from "../form-create-task/form-create-task";
+
+import Sidebar from "../../components/sidebar/Sidebar";
+
 export default function TableManagement() {
   const [value, setValue] = useState();
 
   const dispatch = useDispatch();
 
   const { table } = useSelector((state) => state.projectReducer);
-
+  const [editProjectDetail, setEditProjectDetail] = useState({});
+  const [isOpenModalModify, setOpenModalModify] = useState(false);
+  const [size, setSize] = useState("small"); // default is 'middle'
+  const [isOpenModalCreateTask,setIsOpenModalCreateTask] = useState(false);
   const { userSearch } = useSelector((state) => state.userReducer);
-
+  const { visible } = useSelector((state) => state.modalEditProjectReducer);
+  
+  const { userByProject } = useSelector((state) => state.userReducer);
+ console.log(userByProject)
   // const [loadingState, setLoadingState] = useContext(LoadingContext);
   const [loadingState, setLoadingState] = useState({
     loading: false,
     setLoading: null,
   });
+  useEffect(()=>{
+    setIsOpenModalCreateTask(visible)
+  },[visible])
 
   useEffect(() => {
     fetchGetAllProject();
+    console.log('openMODAL',isOpenModalCreateTask)
   }, []);
 
   const fetchGetAllProject = async () => {
@@ -75,6 +91,15 @@ export default function TableManagement() {
   const handleReset = (clearFilters) => {
     clearFilters();
     setSearchText("");
+  };
+
+  const handleChange = (pagination, filters, sorter) => {
+    console.log("Various parameters", pagination, filters, sorter);
+
+    // this.setState({
+    //   filteredInfo: filters,
+    //   sortedInfo: sorter,
+    // });
   };
 
   const getColumnSearchProps = (dataIndex) => ({
@@ -187,7 +212,6 @@ export default function TableManagement() {
     const result = await fetchGetProjectDetailApi(id);
     dispatch(getProjectEditAction(result.data.content));
   };
-
 
   const columns = [
     {
@@ -421,8 +445,11 @@ export default function TableManagement() {
             className="text-success"
             style={{ fontSize: 20 }}
             onClick={() => {
-              dispatch(openFormEditProjectAction());
-              fetchProjectEdit(record.id);
+              setOpenModalModify(true)
+              setEditProjectDetail(record)
+
+              // dispatch(openFormEditProjectAction());
+              // fetchProjectEdit(record.id);
             }}
           >
             <EditOutlined />
@@ -447,7 +474,24 @@ export default function TableManagement() {
         columns={columns}
         dataSource={table}
         className="table"
+        onChange={handleChange}
       />
+      {
+        isOpenModalModify && (
+          <FormEditProject isOpenModalModify = {isOpenModalModify}
+            setOpenModalModify = {setOpenModalModify}
+            setEditProjectDetail = {setEditProjectDetail}
+            editProjectDetail = {editProjectDetail}
+            />
+        )
+      }
+      {
+        isOpenModalCreateTask&&(
+          <FormCreateTask
+          isOpenModalCreateTask={isOpenModalCreateTask}
+          />
+        )
+      }
     </div>
   );
 }
